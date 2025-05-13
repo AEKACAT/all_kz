@@ -1,0 +1,3 @@
+#,id,created_at,payment_id,payment_method,payment_status,quantity,razorpay_order_id,shipping_address,status,total_amount,product_id,user_id
+1,2,2025-05-08 22:21:30.865503,,CASH_ON_DELIVERY,PENDING,1,,"Aaa 000, Almaty, Алматы, 050005",CONFIRMED,60000,314,4
+2,3,2025-05-09 09:20:55.602820,,CASH_ON_DELIVERY,COMPLETED,2,,"Aaa 000, Almaty, Алматы, 050005",DELIVERED,220000,333,4
