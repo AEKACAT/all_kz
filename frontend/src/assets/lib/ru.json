@@ -1,0 +1,254 @@
+{
+  "searchProducts": "Поиск",
+  "login2": "Войти",
+  "register2": "Регистрация",
+  "adminDashboard": "Панель администратора",
+  "cart2": "Корзина",
+  "logout": "Выйти",
+  "userProfile": "Профиль пользователя",
+  "error": {
+    "title": "Ошибка",
+    "description": "Что-то пошло не так! Пожалуйста, попробуйте позже.\nБэкенд отключён или проблемы с сетью.",
+    "retry": "Повторить"
+  },
+  "login": {
+    "welcome": "Добро пожаловать в SHOP.CO",
+    "continue": "Войдите, чтобы продолжить",
+    "googleLogin": "Продолжить через Google",
+    "orContinueWith": "Или продолжить с",
+    "email": "Адрес электронной почты",
+    "emailEnter": "пример@gmail.com",
+    "password": "Пароль",
+    "forgotPassword": "Забыли пароль?",
+    "loginButton": "Войти",
+    "noAccount": "Нет аккаунта?",
+    "createAccount": "Создать аккаунт",
+    "forgotPasswordTitle": "Забыли пароль",
+    "forgotPasswordSubtitle": "Следуйте инструкциям для сброса пароля",
+    "sendOtp": "Отправить OTP",
+    "sendingOtp": "Отправка OTP...",
+    "resendOtp": "Отправить OTP снова",
+    "sending": "Отправка...",
+    "enterOtp": "Введите OTP",
+    "otpPlaceholder": "Введите 6-значный OTP",
+    "newPassword": "Новый пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "passwordMismatch": "Пароли не совпадают",
+    "resetPassword": "Сбросить пароль",
+    "resettingPassword": "Сброс пароля...",
+    "backToLogin": "Назад к входу",
+    "passwordMustContain": "Пароль должен содержать:",
+    "requirements": {
+      "minLength": "Минимум 8 символов",
+      "upperCase": "Хотя бы одну заглавную букву",
+      "lowerCase": "Хотя бы одну строчную букву",
+      "number": "Хотя бы одну цифру",
+      "specialChar": "Хотя бы один специальный символ (!@#$%^&*)"
+    }
+  },
+  "register": {
+    "createAccount": "Создать аккаунт",
+    "joinToday": "Присоединяйтесь к SHOP.CO сегодня",
+    "continueWithGoogle": "Продолжить через Google",
+    "orRegisterWithEmail": "Или зарегистрируйтесь по почте",
+    "name": "Имя",
+    "namePlaceholder": "Введите ваше имя (3-50 символов)",
+    "email": "Адрес электронной почты",
+    "emailPlaceholder": "Введите ваш email",
+    "phoneNumber": "Номер телефона",
+    "phonePlaceholder": "Введите 10-значный номер",
+    "street": "Улица",
+    "streetPlaceholder": "Введите название улицы",
+    "city": "Город",
+    "cityPlaceholder": "Введите город",
+    "district": "Район",
+    "districtPlaceholder": "Введите район",
+    "zipCode": "Почтовый индекс",
+    "zipCodePlaceholder": "Введите индекс, например 523105",
+    "state": "Область",
+    "statePlaceholder": "Введите область",
+    "country": "Страна",
+    "countryPlaceholder": "Введите страну",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введите пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "confirmPasswordPlaceholder": "Подтвердите ваш пароль",
+    "passwordMismatch": "Пароли не совпадают",
+    "submitButton": "Создать аккаунт",
+    "creatingAccount": "Создание аккаунта...",
+    "alreadyHaveAccount": "Уже есть аккаунт?",
+    "loginLink": "Войти"
+  },
+  "footer": {
+    "shopByCategory": "Покупайте по категориям",
+    "latestProducts": "Посмотрите наши новинки",
+    "aboutUs": "О нас",
+    "companyName": "Магазин Дарлы",
+    "followUs": "Следите за нами",
+    "linkedin": "LinkedIn",
+    "instagram": "Instagram",
+    "rightsReserved": "Все права защищены."
+  },
+  "loading": {
+    "title": "Загрузка...",
+    "description": "При первой загрузке это может занять несколько секунд. Пожалуйста, подождите"
+  },
+  "hero": {
+    "title": "Найдите товары, которые дополнят ваш образ жизни",
+    "subtitle": "Откройте для себя широкий ассортимент одежды, электроники и товаров для дома — всё для вашего удобства и комфорта.",
+    "shopNow": "Купить сейчас",
+    "stat1": {
+      "number": "200+",
+      "label": "Международные бренды"
+    },
+    "stat2": {
+      "number": "2,000+",
+      "label": "Высококачественные товары"
+    },
+    "stat3": {
+      "number": "30,000+",
+      "label": "Довольные клиенты"
+    }
+  },
+  "pagenotfound": {
+    "title": "Страница не найдена",
+    "description": "Упс! Страница, которую вы ищете, не существует или была перемещена. Давайте вернемся на главную.",
+    "backToHome": "На главную",
+    "needHelp": "Нужна помощь?",
+    "contactSupport": "Связаться с поддержкой"
+  },
+  "new": "Новинки",
+  "product": {
+    "relatedProducts": "Похожие товары",
+    "viewAll": "Смотреть все",
+    "addToCart": "Добавить в корзину",
+    "adding": "Добавление...",
+    "buyNow": "Купить сейчас",
+    "descriptionTitle": "Описание товара",
+    "reviewsTitle": "Оценки и отзывы",
+    "noReviews": "Отзывов пока нет.",
+    "leaveReview": "Оставить отзыв",
+    "ratingLabel": "Оценка:",
+    "reviewLabel": "Ваш отзыв:",
+    "submitReview": "Отправить отзыв",
+    "addingReview": "Добавление отзыва...",
+    "onlyXAvailable": "Осталось только {{count}}",
+    "inStock": "В наличии",
+    "outOfStock": "Нет в наличии",
+    "sizesAvailable": "Доступные размеры",
+    "coloursAvailable": "Доступные цвета"
+  },
+  "errors": {
+    "loginToAddCart": "Пожалуйста, войдите в систему, чтобы добавить товар в корзину.",
+    "loginToOrder": "Пожалуйста, войдите в систему, чтобы оформить заказ.",
+    "loginToReview": "Пожалуйста, войдите в систему, чтобы оставить отзыв.",
+    "confirmDeleteReview": "Вы уверены, что хотите удалить этот отзыв?"
+  },
+  "viewAll": "Смотреть все",
+  "filter": "Фильтр",
+  "clearFilter": "Очистить фильтр",
+  "brands": "Бренды",
+  "showLess": "Показать меньше",
+  "more": "дополнительно",
+  "priceFilter": "Фильтр по цене",
+  "otherCategories": "Другие категории",
+  "products": "Товары",
+  "recommended": "Рекомендуемые",
+  "productsPerPage": "Товаров на странице",
+  "noProducts": "Товары не найдены",
+  "profile": {
+    "title": "Профиль",
+    "edit": "Редактировать",
+    "cancel": "Отменить",
+    "save": "Сохранить изменения",
+    "saving": "Сохраняем...",
+    "fields": {
+      "name": "Имя",
+      "email": "Электронная почта",
+      "phoneNumber": "Номер телефона",
+      "city": "Город",
+      "state": "Штат / Регион",
+      "country": "Страна",
+      "district": "Район",
+      "zipCode": "Почтовый индекс",
+      "street": "Улица"
+    }
+  },
+  "dashboard": {
+    "profile": "Профиль",
+    "orders": "Заказы",
+    "updatePassword": "Изменить пароль",
+    "more": "Дополнительно"
+  },
+  "account": {
+    "title": "Аккаунт",
+    "userInfo": "Информация о пользователе",
+    "deleteAccount": "Удалить или деактивировать аккаунт",
+    "logout": "Выйти из аккаунта",
+    "confirmPassword": "Введите пароль для подтверждения удаления аккаунта",
+    "fields": {
+      "name": "Имя",
+      "email": "Электронная почта",
+      "phoneNumber": "Телефон",
+      "city": "Город",
+      "state": "Регион",
+      "country": "Страна",
+      "zipCode": "Почтовый индекс",
+      "street": "Улица"
+    }
+  },
+  "updatePassword": {
+    "title": "Изменить пароль",
+    "currentPassword": "Текущий пароль",
+    "newPassword": "Новый пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "updating": "Обновление...",
+    "updateButton": "Изменить пароль",
+    "requirements": {
+      "title": "Пароль должен содержать:",
+      "minLength": "От 8 до 16 символов",
+      "upperCase": "Хотя бы одну заглавную букву",
+      "lowerCase": "Хотя бы одну строчную букву",
+      "number": "Хотя бы одну цифру",
+      "specialChar": "Хотя бы один спецсимвол (@#$%^&+=!)"
+    },
+    "passwordMismatch": "Пароли не совпадают"
+  },
+  "orders": {
+    "title": "Ваши заказы",
+    "noOrders": "Заказы не найдены.",
+    "orderId": "Номер заказа",
+    "product": "Товар",
+    "quantity": "Количество",
+    "total": "Сумма",
+    "status": "Статус",
+    "paymentMethod": "Способ оплаты",
+    "paymentStatus": "Статус оплаты",
+    "paymentId": "ID оплаты",
+    "address": "Адрес доставки",
+    "date": "Дата заказа",
+    "cod": "Оплата при получении",
+    "cancel": "Отменить заказ",
+    "confirmCancel": "Вы уверены, что хотите отменить заказ?"
+  },
+  "cart": {
+    "title": "Ваша корзина",
+    "empty": "Ваша корзина пуста",
+    "browse": "Перейти к покупкам",
+    "summary": {
+      "title": "Сводка заказа",
+      "totalItems": "Всего товаров",
+      "total": "Итого"
+    },
+    "payment": {
+      "title": "Способ оплаты",
+      "cod": "Оплата при получении"
+    },
+    "address": {
+      "title": "Адрес доставки (измените при необходимости)"
+    },
+    "checkout": "Перейти к оформлению"
+  },
+  "brand": "Бренд",
+  "relatedProducts":"Похожие товары"
+}

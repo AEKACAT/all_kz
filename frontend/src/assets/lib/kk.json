@@ -1,0 +1,254 @@
+{
+  "searchProducts": "Iздеу",
+  "login2": "Кіру",
+  "register2": "Тіркелу",
+  "adminDashboard": "Әкімші панелі",
+  "cart2": "Себет",
+  "logout": "Шығу",
+  "userProfile": "Пайдаланушы профилі",
+  "error": {
+    "title": "Қате",
+    "description": "Бірнәрсе дұрыс болмады! Кейінірек қайталап көріңіз.\nБэкэнд өшірулі немесе желіде ақау бар.",
+    "retry": "Қайталау"
+  },
+  "login": {
+    "welcome": "SHOP.CO сайтына қош келдіңіз",
+    "continue": "Жалғастыру үшін кіріңіз",
+    "googleLogin": "Google арқылы кіру",
+    "orContinueWith": "Немесе жалғастырыңыз",
+    "email": "Электрондық пошта мекенжайы",
+    "emailEnter": "мысал@gmail.com",
+    "password": "Құпия сөз",
+    "forgotPassword": "Құпия сөзді ұмыттыңыз ба?",
+    "loginButton": "Кіру",
+    "noAccount": "Тіркелгі жоқ па?",
+    "createAccount": "Тіркелу",
+    "forgotPasswordTitle": "Құпия сөзді ұмыттым",
+    "forgotPasswordSubtitle": "Құпия сөзді қалпына келтіру үшін қадамдарды орындаңыз",
+    "sendOtp": "OTP жіберу",
+    "sendingOtp": "OTP жіберілуде...",
+    "resendOtp": "OTP қайта жіберу",
+    "sending": "Жіберілуде...",
+    "enterOtp": "OTP енгізіңіз",
+    "otpPlaceholder": "6 таңбалы OTP енгізіңіз",
+    "newPassword": "Жаңа құпия сөз",
+    "confirmPassword": "Құпия сөзді растаңыз",
+    "passwordMismatch": "Құпия сөздер сәйкес келмейді",
+    "resetPassword": "Құпия сөзді қалпына келтіру",
+    "resettingPassword": "Құпия сөз қалпына келтірілуде...",
+    "backToLogin": "Кіруге оралу",
+    "passwordMustContain": "Құпия сөзде мыналар болуы керек:",
+    "requirements": {
+      "minLength": "Кемінде 8 таңба",
+      "upperCase": "Кемінде бір бас әріп",
+      "lowerCase": "Кемінде бір кіші әріп",
+      "number": "Кемінде бір сан",
+      "specialChar": "Кемінде бір арнайы таңба (!@#$%^&*)"
+    }
+  },
+  "register": {
+    "createAccount": "Тіркелу",
+    "joinToday": "Бүгін SHOP.CO сайтына қосылыңыз",
+    "continueWithGoogle": "Google арқылы тіркелу",
+    "orRegisterWithEmail": "Немесе электрондық пошта арқылы тіркеліңіз",
+    "name": "Аты",
+    "namePlaceholder": "Атыңызды енгізіңіз (3-50 таңба)",
+    "email": "Электрондық пошта",
+    "emailPlaceholder": "Электрондық поштаңызды енгізіңіз",
+    "phoneNumber": "Телефон нөмірі",
+    "phonePlaceholder": "10 таңбалы телефон нөмірін енгізіңіз",
+    "street": "Көше",
+    "streetPlaceholder": "Көше атауын енгізіңіз",
+    "city": "Қала",
+    "cityPlaceholder": "Қаланы енгізіңіз",
+    "district": "Аудан",
+    "districtPlaceholder": "Ауданды енгізіңіз",
+    "zipCode": "Пошта индексі",
+    "zipCodePlaceholder": "Индекс енгізіңіз мыс: 523105",
+    "state": "Облыс",
+    "statePlaceholder": "Облысты енгізіңіз",
+    "country": "Мемлекет",
+    "countryPlaceholder": "Мемлекеттi енгізіңіз",
+    "password": "Құпия сөз",
+    "passwordPlaceholder": "Құпия сөзді енгізіңіз",
+    "confirmPassword": "Құпия сөзді растаңыз",
+    "confirmPasswordPlaceholder": "Құпия сөзді растаңыз",
+    "passwordMismatch": "Құпия сөздер сәйкес емес",
+    "submitButton": "Тіркелу",
+    "creatingAccount": "Тіркелу жүріп жатыр...",
+    "alreadyHaveAccount": "Аккаунтыңыз бар ма?",
+    "loginLink": "Кіру"
+  },
+  "footer": {
+    "shopByCategory": "Санат бойынша сатып алыңыз",
+    "latestProducts": "Біздің соңғы өнімдерді қараңыз",
+    "aboutUs": "Біз туралы",
+    "companyName": "Дарла дүкені",
+    "followUs": "Бізге жазылыңыз",
+    "linkedin": "LinkedIn",
+    "instagram": "Instagram",
+    "rightsReserved": "Барлық құқықтар қорғалған."
+  },
+  "loading": {
+    "title": "Жүктелуде...",
+    "description": "Алғашқы жүктеу бірнеше секундқа созылуы мүмкін. Күте тұрыңыз"
+  },
+  "hero": {
+    "title": "Өмір салтыңызды толықтыратын тауарларды табыңыз",
+    "subtitle": "Киімнен бастап электроника мен үйге арналған тауарларға дейінгі кең ассортиментті ашыңыз — барлығы сіздің жайлылығыңыз бен қолайлығыңыз үшін.",
+    "shopNow": "Қазір сатып алу",
+    "stat1": {
+      "number": "200+",
+      "label": "Халықаралық брендтер"
+    },
+    "stat2": {
+      "number": "2,000+",
+      "label": "Жоғары сапалы тауарлар"
+    },
+    "stat3": {
+      "number": "30,000+",
+      "label": "Бақытты клиенттер"
+    }
+  },
+  "pagenotfound": {
+    "title": "Бет табылмады",
+    "description": "Упс! Сіз іздеген бет жоқ немесе жылжытылған. Басты бетке оралайық.",
+    "backToHome": "Басты бетке",
+    "needHelp": "Көмек керек пе?",
+    "contactSupport": "Қолдау қызметіне хабарласыңыз"
+  },
+  "new": "Жаңа топтама",
+  "product": {
+    "relatedProducts": "Ұқсас өнімдер",
+    "viewAll": "Барлығын қарау",
+    "addToCart": "Себетке қосу",
+    "adding": "Қосылуда...",
+    "buyNow": "Қазір сатып алу",
+    "descriptionTitle": "Өнім сипаттамасы",
+    "reviewsTitle": "Бағалар мен пікірлер",
+    "noReviews": "Әзірге пікірлер жоқ.",
+    "leaveReview": "Пікір қалдыру",
+    "ratingLabel": "Бағалау:",
+    "reviewLabel": "Сіздің пікіріңіз:",
+    "submitReview": "Пікірді жіберу",
+    "addingReview": "Пікір қосылуда...",
+    "onlyXAvailable": "Тек {{count}} дана қалды",
+    "inStock": "Қоймада бар",
+    "outOfStock": "Қоймада жоқ",
+    "sizesAvailable": "Қол жетімді өлшемдер",
+    "coloursAvailable": "Қол жетімді түстер"
+  },
+  "errors": {
+    "loginToAddCart": "Өнімді себетке қосу үшін жүйеге кіріңіз.",
+    "loginToOrder": "Тапсырыс беру үшін жүйеге кіріңіз.",
+    "loginToReview": "Пікір қалдыру үшін жүйеге кіріңіз.",
+    "confirmDeleteReview": "Бұл пікірді жойғыңыз келетініне сенімдісіз бе?"
+  },
+  "viewAll": "Барлығын қарау",
+  "filter": "Сүзгі",
+  "clearFilter": "Сүзгіні тазарту",
+  "brands": "Брендтер",
+  "showLess": "Аз көрсету",
+  "more": "қосымша",
+  "priceFilter": "Баға бойынша сүзгі",
+  "otherCategories": "Басқа санаттар",
+  "products": "Өнімдер",
+  "recommended": "Ұсынылғандар",
+  "productsPerPage": "Беттегі өнімдер саны",
+  "noProducts": "Өнімдер табылмады",
+  "profile": {
+    "title": "Профиль",
+    "edit": "Өзгерту",
+    "cancel": "Болдырмау",
+    "save": "Өзгерістерді сақтау",
+    "saving": "Сақталуда...",
+    "fields": {
+      "name": "Аты",
+      "email": "Электрондық пошта",
+      "phoneNumber": "Телефон нөмірі",
+      "city": "Қала",
+      "state": "Штат / Аймақ",
+      "country": "Ел",
+      "district": "Аудан",
+      "zipCode": "Пошталық индекс",
+      "street": "Көше"
+    }
+  },
+  "dashboard": {
+    "profile": "Профиль",
+    "orders": "Тапсырыстар",
+    "updatePassword": "Құпиясөзді өзгерту",
+    "more": "Қосымша"
+  },
+  "account": {
+    "title": "Аккаунт",
+    "userInfo": "Пайдаланушы ақпараты",
+    "deleteAccount": "Аккаунтты өшіру немесе деактивациялау",
+    "logout": "Шығу",
+    "confirmPassword": "Аккаунтты өшіруді растау үшін құпиясөзді енгізіңіз",
+    "fields": {
+      "name": "Аты",
+      "email": "Электрондық пошта",
+      "phoneNumber": "Телефон нөмірі",
+      "city": "Қала",
+      "state": "Өңір",
+      "country": "Ел",
+      "zipCode": "Пошталық индекс",
+      "street": "Көше"
+    }
+  },
+  "updatePassword": {
+    "title": "Құпиясөзді өзгерту",
+    "currentPassword": "Ағымдағы құпиясөз",
+    "newPassword": "Жаңа құпиясөз",
+    "confirmPassword": "Құпиясөзді растаңыз",
+    "updating": "Жаңартылуда...",
+    "updateButton": "Құпиясөзді өзгерту",
+    "requirements": {
+      "title": "Құпиясөз келесі талаптарға сай болуы керек:",
+      "minLength": "8-ден 16-ға дейінгі таңба",
+      "upperCase": "Кемінде бір бас әріп",
+      "lowerCase": "Кемінде бір кіші әріп",
+      "number": "Кемінде бір сан",
+      "specialChar": "Кемінде бір арнайы таңба (@#$%^&+=!)"
+    },
+    "passwordMismatch": "Құпиясөздер сәйкес келмейді"
+  },
+  "orders": {
+    "title": "Сіздің тапсырыстарыңыз",
+    "noOrders": "Тапсырыстар табылмады.",
+    "orderId": "Тапсырыс нөмірі",
+    "product": "Өнім",
+    "quantity": "Саны",
+    "total": "Жалпы сома",
+    "status": "Мәртебесі",
+    "paymentMethod": "Төлеу тәсілі",
+    "paymentStatus": "Төлем мәртебесі",
+    "paymentId": "Төлем ID",
+    "address": "Жеткізу мекенжайы",
+    "date": "Тапсырыс күні",
+    "cod": "Қолма-қол төлем",
+    "cancel": "Тапсырысты болдырмау",
+    "confirmCancel": "Тапсырысты болдырмағыңыз келетініне сенімдісіз бе?"
+  },
+  "cart": {
+    "title": "Себетіңіз",
+    "empty": "Себетіңіз бос",
+    "browse": "Сатып алуға көшу",
+    "summary": {
+      "title": "Тапсырыс шолуы",
+      "totalItems": "Барлығы",
+      "total": "Жалпы сома"
+    },
+    "payment": {
+      "title": "Төлем әдісі",
+      "cod": "Қолма-қол жеткізгенде төлеу"
+    },
+    "address": {
+      "title": "Жеткізу мекенжайы (өзгертуге болады)"
+    },
+    "checkout": "Төлеуге өту"
+  },
+  "brand": "Бренд",
+  "relatedProducts":"Ұқсас өнімдер"
+}
