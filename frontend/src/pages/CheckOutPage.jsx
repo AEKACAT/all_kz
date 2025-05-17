@@ -1,56 +1,70 @@
 import React, { useContext, useEffect, useState } from 'react';
-import image1 from '../assets/images/2.jpg'
+import emptyCartImage from '../assets/images/empty-cart.webp'
+import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 import { toast } from 'react-toastify';
-import { data, useNavigate, useParams } from 'react-router-dom';
-import ProductContext from '../state-management/ProductContext';
 import UserContext from '../state-management/UserContext';
-import api from '../api-services/apiConfig';
 import Loading from '../components/Loading';
+import { CiCircleMinus } from 'react-icons/ci';
+import api from '../api-services/apiConfig';
+import trashIcon from '../assets/images/delete_red.svg';
+import clsx from 'clsx';
+import { FiShoppingCart } from 'react-icons/fi';
 
 const RAZORPAY_KEY = import.meta.env.VITE_RAZORPAY_KEY;
-const CheckoutPage = () => {
 
+function CheckoutPage() {
   const navigate = useNavigate();
-  const [selectedSize, setSelectedSize] = useState('');
-  const [selectedColor, setSelectedColor] = useState('');
-  const [quantity, setQuantity] = useState(1);
-  // const [shippingAddress, setShippingAddress] = useState('');
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalItems, setTotalItems] = useState(1);
+  const { t } = useTranslation();
   const [paymentMode, setPaymentMode] = useState('Cash on Delivery');
+  const [paymentLoading, setPaymentLoading] = useState(false);
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [errorDetails, setErrorDetails] = useState(null);
-  const [paymentLoading, setPaymentLoading] = useState(false);
 
-
-
-
-  const { productId } = useParams();
-  const { fetchProductById, loading: productLoading,
-    product,
-  } = useContext(ProductContext);
-  const { placeOrder, loading: orderLoading } = useContext(UserContext);
   const user = JSON.parse(localStorage.getItem('user'));
   const isAuthenticated = localStorage.getItem('isAuthenticated');
-
+  const [grandTotal, setGrandTotal] = React.useState(0);
+  // console.log(user)
   const [shippingAddress, setShippingAddress] = useState(
     [user.street, user.city, user.district, user.state, user.zipCode]
       .filter((item) => item) // filters out null, undefined, and empty strings
       .join(', ')
   );
 
+  // console.log(shippingAddress, user.street , user.city, user.district, user.state, user.zipCode, user.country) 
+
+
+
+  const { fetchUserCart, cart, loading, message, error,
+    removeFromCart,
+    incrementQuantity,
+    decrementQuantity,
+    checkOut,
+  } = useContext(UserContext);
 
   useEffect(() => {
-    if (productId) {
-      fetchProductById(productId);
-    }
-  }, [productId]);
+    // console.log(user)  
+    fetchUserCart(user.id);
+    // console.log(user)
+    // console.log(cart, "cart");
+
+
+  }, []);
 
   useEffect(() => {
-    if (product) {
-      setTotalPrice(product.price * quantity);
-    }
-  }, [product, quantity]);
+    let total = 0;
+    cart?.forEach((item) => {
+      total += item.price * item.quantity;
+    });
+    setGrandTotal(total);
+  }, [cart]);
+
+  //  useEffect(() => {
+  //    if (product) {
+  //      setTotalPrice(product.price * quantity);
+  //    }
+  //  }, [product, quantity]);
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -60,40 +74,6 @@ const CheckoutPage = () => {
       document.body.removeChild(script);
     };
   }, []);
-
-  const verifyPamentDetails = async (details) => {
-    setPaymentLoading(true);
-    console.log("payment details ", details)
-    try {
-      const res = await api.post('/user/order/verify', details,
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-      toast.success(res.data.message);
-      // navigate to user profile after 1 sec
-      setTimeout(() => {
-        navigate('/user/orders');
-      }, 1000);
-
-      // if (res.status === 200) {
-      //   toast.success(res.data.message);
-      //   // navigate to user profile
-      //   navigate('/user/profile');
-      // }
-      // else {
-      //   toast.error(res.data.message);
-      // }
-
-    } catch (error) {
-      console.log("error while verifying data", error);
-      toast.error(error.response?.data?.message || 'Verification failed');
-    } finally {
-      setPaymentLoading(false);
-    }
-  };
 
   const sendFailureDetailsToBackend = async (razorpay_order_id) => {
     setPaymentLoading(true);
@@ -108,7 +88,32 @@ const CheckoutPage = () => {
       setPaymentLoading(false);
     }
   };
+  const verifyPamentDetails = async (details) => {
+    setPaymentLoading(true);
+    console.log("payment details ", details)
+    try {
+      const res = await api.post('/user/order/verify', details,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
 
+      toast.success(res.data.message);
+      await fetchUserCart(user.id);
+      // navigate to user profile after 1 sec
+      setTimeout(() => {
+        navigate('/user/orders');
+      }, 1000);
+
+    } catch (error) {
+      console.log("error while verifying data", error);
+      toast.error(error.response?.data?.message || 'Verification failed');
+    } finally {
+      setPaymentLoading(false);
+    }
+  };
 
   const openRazorpay = (order) => {
     const options = {
@@ -200,55 +205,32 @@ const CheckoutPage = () => {
 
     rzp.open();
   };
-  const createOrder = async () => {
+  const checkOutWithRazorPay = async () => {
     setPaymentLoading(true);
     try {
-      //   {
-      //     "userId":2,
-      //     "productId":1,
-      //     "quantity":2,
-      //     "shippingAddress":"tetst purpose",
-      //     "paymentMode":"razorpay"
-      // }
       const orderRquest = {
         userId: user.id,
-        productId: productId,
-        quantity: quantity,
         shippingAddress: shippingAddress,
         paymentMode: paymentMode
       }
-      const response = await api.post(`/user/order/create`, orderRquest);
+      const response = await api.post(`/user/order/checkout`, orderRquest);
 
       const orderDataFromServer = response.data?.razorpayOrder;
       console.log(orderDataFromServer, "response from server whith razorpay");
-      //   "razorpayOrder": {
-      //     "id": "order_QHkW8AZHhnzU7V",
-      //     "currency": "INR",
-      //     "amount": 9000000
-      // },
       if (orderDataFromServer) {
         openRazorpay(orderDataFromServer);
       } else {
-        toast.success(response.data.message);
-        navigate("/user/orders");
+        fetchUserCart(user.id);
+        toast.success("Order placed successfully");
+        navigate('/user/orders');
       }
     } catch (error) {
       console.error("Error creating order:", error);
-      toast.error(error.response?.data?.message || 'Order creation failed');
-      if (error.response?.data?.errors) {
-        const errorsFromServer = error.response.data.errors;
-        // console.log(errorsFromServer);
-        Object.keys(errorsFromServer).forEach((key) => {
-          toast.error(errorsFromServer[key]);
-        })
-      }
     } finally {
       setPaymentLoading(false);
     }
   };
-  const handlePlaceOrder = () => {
-
-    // checking payment mode is selected or not
+  const handleCheckOut = async () => {
     if (!paymentMode) {
       toast.error('Please select payment mode');
       return;
@@ -259,167 +241,172 @@ const CheckoutPage = () => {
       navigate('/login');
       return;
     }
-    // placeOrder(user.id, product.id, quantity); old code
 
-    createOrder(); // new code
-  };
+    // checkOut(user.id);
 
-  if (orderLoading || productLoading || paymentLoading) {
-    return <Loading />
+    await checkOutWithRazorPay();
+
   }
+
+  if (loading || paymentLoading) return <Loading />
+
+
   return (
-    <div className="container mx-auto p-6 grid md:grid-cols-2 gap-8">
-      {/* LEFT SIDE - Product Details */}
-      <div >
-        <img src={`data:image/png;base64,${product?.imageData}`} alt={product?.name} className="w-full max-w-sm md:w-56 mb-4 rounded shadow" />
+    <div className='max-w-6xl mx-auto'>
 
-        <h2 className="text-3xl font-bold">{product?.name}</h2>
-        <p className="text-gray-500 mb-1">by {product?.brand}</p>
-        {/* description */}
-        <p className="text-gray-500 mb-1">{product?.description}</p>
-        {/* rating */}
-        <p className="text-yellow-500 text-lg">
-          ★ ★ ★ ★ ☆ <span className="text-gray-500 text-base">({product?.rating})</span>
-        </p>
+      <h1 className="mx-auto text-3xl md:text-6xl font-extrabold leading-tight text-black mt-7">
+        {t('cart.title')}
+      </h1>
+      <div className="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Left Column: Product Details */}
+        <div className="md:col-span-2 border border-gray-200 rounded-2xl">
+          {/* {console.log(cart)} */}
+          {cart?.length === 0 ? (
+            <div className="flex justify-center items-center min-h-[60vh]">
+              <div className="flex flex-col items-center text-center space-y-6">
 
-        <p className="text-2xl font-bold text-black mt-2">₸{product?.price}</p>
+                {/* Icon */}
+                <div className="bg-gray-100 p-6 rounded-full">
+                  <FiShoppingCart className="text-5xl text-gray-500" />
+                </div>
 
-        <span
-          className={`inline-block px-3 py-1 text-sm font-medium rounded-full 
-                                ${product?.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
-        >
-          {product?.stock > 0 ? `${product?.stock} in stock` : 'Out of stock'}
-        </span>
-        <div className="inline-block ml-2">
-          <button
-            className={`${quantity >= product?.stock ? 'bg-slate-200 text-white text-sm py-1 px-3 rounded-lg shadow-md cursor-not-allowed' : 'bg-slate-400 text-white text-sm py-1 px-3 rounded-lg shadow-md hover:bg-slate-500 cursor-pointer'}`}
-            onClick={() => setQuantity(quantity + 1)}
-            disabled={quantity >= product?.stock}
-          >
-            +
-          </button>
-          <span className="mx-2">{quantity}</span>
-          <button
-            onClick={() => setQuantity(quantity - 1)}
+                {/* Message */}
+                <p className="text-2xl md:text-3xl font-semibold text-gray-800">{t('cart.empty')}</p>
 
-            className={`${quantity == 1 ?
-              'bg-slate-200 text-white text-sm py-1 px-3 rounded-lg shadow-md cursor-not-allowed'
-              : 'bg-slate-400 text-white text-sm py-1 px-3 rounded-lg shadow-md hover:bg-slate-500 cursor-pointer'}`}
-            disabled={quantity == 1}
-          >
-            -
-          </button>
-        </div>
-
-        <div className="mt-4">
-          <p className="font-semibold mb-1">{product?.sizes?.lenght > 0 && 'Sizes Available'}</p>
-          <div className="flex flex-wrap gap-2">
-
-            {product?.sizes?.split(',').map((size) => size.trim()).filter(s => s).map((size) => (
-              <button
-                key={size}
-                onClick={() => setSelectedSize(size)}
-                className={`px-4 py-1 border rounded cursor-pointer ${selectedSize === size
-                  ? 'border-black font-semibold'
-                  : 'border-gray-300 text-gray-700'
-                  }`}
-              >
-                {size}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <p className="font-semibold mb-1">Colour Available</p>
-          <div className="flex gap-3">
-            {product?.colors.split(',').map((size) => size.trim()).filter(s => s).map((color) => (
+                {/* Button */}
+                <Link
+                  to="/"
+                  onClick={() => window.scrollTo({ top: 100, behavior: 'smooth' })}
+                  className="inline-block bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-900 transition"
+                >
+                  {t('cart.browse')}
+                </Link>
+              </div>
+            </div>
+          ) : (
+            cart?.map((cartItem, index) => (
               <div
-                key={color}
-                onClick={() => setSelectedColor(color)}
-                className={`w-8 h-8 rounded-full cursor-pointer border-2 ${selectedColor === color ? 'border-black' : 'border-gray-300'
-                  }`}
-                style={{ backgroundColor: color }}
-              ></div>
-            ))}
+                key={index}
+                className={clsx("max-w-4xl md:flex items-center justify-between bg-white p-4 md:mx-3 md:my-4",
+                  index === cart.length - 1 ? 'border-b border-b-gray-200' : ''
+                )}
+              >
+                {/* Image */}
+                <div className="flex items-center gap-5">
+                  <div className="w-40 h-40 rounded-xl overflow-hidden">
+                    <img
+                      src={`data:image/png;base64,${cartItem.imageData}`}
+                      alt={cartItem.productName}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Product Details */}
+                  <div className='flex flex-col justify-between h-30'>
+                    <h2 className="text-lg font-semibold text-gray-900">{cartItem.productName}</h2>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {t('brand')}: <span className="text-gray-800">{cartItem.brand}</span>
+                    </p>
+                    <p className="text-xl font-bold mt-2">₸{cartItem.price}</p>
+                  </div>
+                </div>
+
+                {/* Quantity & Remove */}
+                <div className="flex md:flex-col flex-row-reverse justify-between md:items-end md:h-30">
+                  {/* Delete Button */}
+                  <button
+                    onClick={() => removeFromCart(user.id, cartItem.id)}
+                    className="text-red-500 hover:text-red-600"
+                  >
+                    <img src={trashIcon} alt="20" />
+                  </button>
+
+                  {/* Quantity Control */}
+                  <div className="bg-gray-100 rounded-full px-6 py-2 flex items-center space-x-6">
+                    <button
+                      onClick={() => decrementQuantity(user.id, cartItem.id)}
+                      disabled={cartItem.quantity === 1}
+                      className="text-xl text-black disabled:text-gray-400 disabled:cursor-not-allowed"
+                    >
+                      -
+                    </button>
+                    <span className="text-lg font-medium">{cartItem.quantity}</span>
+                    <button
+                      onClick={() => incrementQuantity(user.id, cartItem.id)}
+                      className="text-xl text-black"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+
+            ))
+          )}
+        </div>
+
+        {/* Right Column: Summary */}
+        <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm w-full max-w-md mx-auto">
+          {/* Title */}
+          <h2 className="text-xl font-semibold text-gray-900 mb-6">{t('cart.summary.title')}</h2>
+
+          {/* Totals */}
+          <div className="space-y-3 text-sm text-gray-700 mb-4">
+            <div className="flex justify-between">
+              <span className='font-thin'>{t('cart.summary.totalItems')}</span>
+              <span className="font-bold">{cart?.map(item => item.quantity).reduce((a, b) => a + b, 0)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className='font-thin'>{t('cart.summary.total')}</span>
+              <span className="font-bold">₸{grandTotal}</span>
+            </div>
           </div>
-        </div>
-        {/* 
-        <div className="mt-4">
-          <label className="font-medium block mb-1">Quantity:</label>
-          <input
-            type="number"
-            min="1"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-            className="w-24 border border-gray-300 rounded px-2 py-1"
-          />
-        </div> */}
 
-      </div>
-
-      {/* RIGHT SIDE - Summary */}
-      <div className="border border-gray-200 rounded-lg p-6 shadow-md sticky top-28 ">
-        <h3 className="text-2xl font-bold mb-4">Order Summary</h3>
-
-        <div className="mb-4">
-          <p className="text-gray-600">Product: <span className="font-medium">{product?.name}</span></p>
-          <p className="text-gray-600">Price per item: ₸{product?.price}</p>
-          <p className="text-gray-600">Quantity: {quantity}</p>
-          <p className="text-gray-800 font-semibold text-xl mt-2">
-            Total Price: ₸{totalPrice}
-          </p>
-        </div>
-
-        <div className="mb-4">
-          <label className="font-medium block mb-1">Shipping Address (Edit if you want):</label>
-          {/* {shippingAddress}  */}
-          <textarea name="shippingAddress" id=""
-            value={shippingAddress}
-            onChange={(e) => setShippingAddress(e.target.value)}
-            className="w-full border border-gray-300 rounded px-2 py-1 form-input"
-
-          ></textarea>
-        </div>
-
-        <div className="mb-4">
-          <p className="font-semibold mb-1">Payment Mode:</p>
-          <div className="flex flex-col gap-2">
-            <label className="flex items-center gap-2 cursor-pointer">
+          {/* Payment Mode */}
+          <div className="mb-4 text-sm text-gray-700">
+            <p className="font-semibold mb-2">{t('cart.payment.title')}</p>
+            <label className="flex items-center gap-2">
               <input
                 type="radio"
                 name="payment"
-                value="Cash on Delivery"
-                className='cursor-pointer'
-                checked={paymentMode === 'Cash on Delivery'}
+                className='accent-black'
+                value={t('cart.payment.cod')}
+                checked={paymentMode === t('cart.payment.cod')}
                 onChange={(e) => setPaymentMode(e.target.value)}
               />
-              Cash on Delivery
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="radio"
-                name="payment"
-                value="razorpay"
-                checked={paymentMode === 'razorpay'}
-                className='cursor-pointer'
-                onChange={(e) => setPaymentMode(e.target.value)}
-              />
-              Other
+              {t('cart.payment.cod')}
             </label>
           </div>
+
+          {/* Shipping Address */}
+          <div className="mb-6 text-sm text-gray-700">
+            <p className="font-semibold mb-3">{t('cart.address.title')}</p>
+            <textarea
+              name="shippingAddress"
+              value={shippingAddress}
+              onChange={(e) => setShippingAddress(e.target.value)}
+              placeholder="Міндетті"
+              className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black"
+              rows={2}
+              required
+            />
+          </div>
+
+          {/* Checkout Button */}
+          <button
+            onClick={handleCheckOut}
+            disabled={cart?.length === 0}
+            className={`w-full text-center text-white font-semibold rounded-full py-3 text-sm transition 
+            ${cart?.length === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-black hover:bg-gray-900'}`}
+          >
+            Сатып алу
+          </button>
         </div>
 
-        <button
-          onClick={handlePlaceOrder}
-          className={`${orderLoading ? 'disable-button' : 'primary-button'} w-full`}
-          disabled={orderLoading}
-        >
-          {orderLoading ? 'Placing Order...' : 'Place Order'}
-        </button>
       </div>
     </div>
   );
-};
+}
 
 export default CheckoutPage;

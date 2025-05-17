@@ -1,6 +1,0 @@
-#,id,city,country,created_at,district,email,name,password,phone_number,role,state,street,zip_code
-1,1,,,2025-05-03 16:29:19.419351,,admin@darla.com,,$2a$12$SXDdTPt2rEfBXo/V111VDuMxGZEskq.h.IuDbgUhxe75qu8vJC4Xy,,ADMIN,,,
-2,2,сельский округ Елтайский,Казахстан,2025-05-03 16:42:58.387871,Eltay,eldosnursadyk@gmail.com,Eldos,$2a$12$npf5tEMXPYhEfg7YtGhWn.M1n2mjDjatfgnNSkrwVZcGEygy9ZyjS,7774799459,USER,область Алматинская,улица Байбосын Тамабаев 32Б,091205
-3,3,Almaty,Kazakhstan,2025-05-08 21:44:34.810248,Almaty,john@example.com,John Doe,$2a$12$Srvgfod1EABFeKuRYPwlJupjWJ9lHjHuqFf65NuHw3gYcio.KAOwC,7770001122,USER,Almaty,Aaaa 0,050005
-4,4,Almaty,Казахстан,2025-05-08 21:49:33.221960,"",aigerimok@example.com,Aaaa Oooo,$2a$12$rBoDFxemsMMGobDqnPYdoOvS.cziNHQ.0sj9BUBNh.bVpcjOS7Sh6,7777777777,USER,Алматы,Aaa 000,050005
-5,5,,,2025-05-12 13:55:19.356856,,ooooa8487@gmail.com,Aaaa Oooo,,,USER,,,

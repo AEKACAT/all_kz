@@ -19,25 +19,8 @@ const LandingPage = () => {
 
     const { loading, error } = useContext(CategoryContext);
     const { products, loading: productsLoading, error: productsError,
-        carousels,
-        fetchCarousels,
         fetchShowcaseProducts
     } = useContext(ProductContext);
-
-
-    const handleNextSlide = () => {
-        setCurrentSlide((prevSlide) => (prevSlide + 1) % carousels.length);
-    };
-
-    const handlePrevSlide = () => {
-        setCurrentSlide((prevSlide) => (prevSlide === 0 ? carousels.length - 1 : prevSlide - 1));
-    };
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentSlide((prevSlide) => (prevSlide + 1) % carousels.length);
-        }, 2000);
-        return () => clearInterval(interval);
-    }, [carousels.length])
 
     useEffect(() => {
         const handlefetch = async () => {
@@ -45,8 +28,7 @@ const LandingPage = () => {
             console.log(res);
             setSampleProducts(res);
         }
-        handlefetch()
-        fetchCarousels();
+        handlefetch();
         // setSampleProducts(fetchShowcaseProducts());
     }, []);
 

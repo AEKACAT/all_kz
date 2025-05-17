@@ -5,8 +5,11 @@ import Loading from '../../components/Loading';
 import { Link } from 'react-router-dom';
 import { GrUpdate } from 'react-icons/gr';
 import { IoIosAddCircle } from 'react-icons/io';
+import { useTranslation } from 'react-i18next';
 
 function Dashboard() {
+  const { t } = useTranslation();
+
   // use context
   const { metrics, loading, error, fetchMetrics } = useContext(ProductContext);
 
@@ -18,7 +21,7 @@ function Dashboard() {
 
 
 
-  if (loading) return <Loading/>
+  if (loading) return <Loading />
   if (error) console.log(error)
   // if (error) return <p className="p-4 text-red-500">Error: {error}</p>;
   // if (!metrics) return null;
@@ -39,20 +42,20 @@ function Dashboard() {
   };
   function formatDateTime(isoString) {
     const date = new Date(isoString);
-  
+
     const pad = (n) => n.toString().padStart(2, '0');
-  
+
     const day = pad(date.getDate());
     const month = pad(date.getMonth() + 1); // Month is 0-indexed
     const year = date.getFullYear();
-  
+
     let hours = date.getHours();
     const minutes = pad(date.getMinutes());
     const seconds = pad(date.getSeconds());
-  
+
     const ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12 || 12; // Convert 0 to 12
-  
+
     return `${day}-${month}-${year} at ${pad(hours)}:${minutes}:${seconds} ${ampm}`;
   }
   const getColor = (status) => {
@@ -80,7 +83,7 @@ function Dashboard() {
         return 'text-gray-600 font-bold bg-gray-200';
     }
   };
-  
+
 
 
   return (
@@ -89,22 +92,22 @@ function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-blue-100 p-4 rounded-xl text-center shadow">
           <FaBox className="text-3xl mx-auto text-blue-700 mb-2" />
-          <h2 className="text-xl font-semibold">Total Products</h2>
+          <h2 className="text-xl font-semibold">{t('totalProducts')}</h2>
           <p className="text-2xl">{metrics?.totalProducts}</p>
         </div>
         <div className="bg-green-100 p-4 rounded-xl text-center shadow">
           <FaShoppingCart className="text-3xl mx-auto text-green-700 mb-2" />
-          <h2 className="text-xl font-semibold">Total Orders</h2>
+          <h2 className="text-xl font-semibold">{t('totalOrders')}</h2>
           <p className="text-2xl">{metrics?.totalOrders}</p>
         </div>
         <div className="bg-yellow-100 p-4 rounded-xl text-center shadow">
           <FaTags className="text-3xl mx-auto text-yellow-700 mb-2" />
-          <h2 className="text-xl font-semibold">Total Categories</h2>
+          <h2 className="text-xl font-semibold">{t('totalCategories')}</h2>
           <p className="text-2xl">{metrics?.totalCategories}</p>
         </div>
         <div className="bg-purple-100 p-4 rounded-xl text-center shadow">
           <FaUsers className="text-3xl mx-auto text-purple-700 mb-2" />
-          <h2 className="text-xl font-semibold">Total Users</h2>
+          <h2 className="text-xl font-semibold">{t('totalUsers')}</h2>
           <p className="text-2xl">{metrics?.totalUsers}</p>
         </div>
       </div>
@@ -113,20 +116,20 @@ function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Left: Recent Activity */}
         <div className="bg-white p-4 rounded-xl shadow">
-          <h3 className="text-lg font-semibold mb-2">Recent Activity</h3>
+          <h3 className="text-lg font-semibold mb-2">{t('recentActivity')}</h3>
           <ul className="space-y-2">
             {/* show empty message if no activities */}
             {metrics?.activities?.length === 0 ? (
               <li className="border-b pb-2 text-gray-700">
-                <span className="font-medium">No activities yet</span>
+                <span className="font-medium">{t('noActivities')}</span>
               </li>
             ) : (
               metrics?.activities?.map((activity, index) => (
                 <li key={index} className="border-b pb-2 text-gray-700">
                   <span className="font-medium">{activity.message} message</span>
-                <br />
-                <span className="text-sm text-gray-500">{formatDateTime(activity.timestamp)}</span>
-              </li>
+                  <br />
+                  <span className="text-sm text-gray-500">{formatDateTime(activity.timestamp)}</span>
+                </li>
               ))
             )}
           </ul>
@@ -134,19 +137,19 @@ function Dashboard() {
 
         {/* Right: Quick Actions */}
         <div className="bg-white p-4 rounded-xl shadow">
-          <h3 className="text-lg font-semibold mb-2">Quick Actions</h3>
+          <h3 className="text-lg font-semibold mb-2">{t('quickActions')}</h3>
           <div className="flex flex-col gap-3">
             <Link to="/admin/add-product" className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition cursor-pointer">
-              <FaPlus /> Add Product
+              <FaPlus /> {t('addProduct')}
             </Link>
-            <Link to ="/admin/categories" className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition cursor-pointer">
-            <IoIosAddCircle /> Add Category
+            <Link to="/admin/categories" className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition cursor-pointer">
+              <IoIosAddCircle /> {t('addCategory')}
             </Link>
             <Link to="/admin/orders" className="flex items-center gap-2 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition cursor-pointer">
-              <GrUpdate /> Update Orders
+              <GrUpdate /> {t('updateOrders')}
             </Link>
             <Link to="/admin/users" className="flex items-center gap-2 bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition cursor-pointer">
-              <FaUserFriends /> View Customers
+              <FaUserFriends /> {t('viewCustomers')}
             </Link>
           </div>
         </div>
@@ -154,37 +157,37 @@ function Dashboard() {
 
       {/* Bottom: Recent Orders */}
       <div className="bg-white p-4 rounded-xl shadow">
-        <h3 className="text-lg font-semibold mb-4">Recent Orders</h3>
+        <h3 className="text-lg font-semibold mb-4">{t('recentOrders')}</h3>
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto border">
             <thead>
               <tr className="bg-gray-100">
-                <th className="text-left px-4 py-2 border">Order ID</th>
-                <th className="text-left px-4 py-2 border">User ID</th>
-                <th className="text-left px-4 py-2 border">Order Date</th>
-                <th className="text-left px-4 py-2 border">Status</th>
+                <th className="text-left px-4 py-2 border">{t('orderId')}</th>
+                <th className="text-left px-4 py-2 border">{t('userId')}</th>
+                <th className="text-left px-4 py-2 border">{t('orderDate')}</th>
+                <th className="text-left px-4 py-2 border">{t('status')}</th>
               </tr>
             </thead>
             <tbody>
               {metrics?.recentOrders?.length === 0 ? (
                 <tr>
-                  <td colSpan="4" className="text-center">No recent orders</td>
+                  <td colSpan="4" className="text-center">{t('noRecentOrders')}</td>
                 </tr>
               ) : (
                 metrics?.recentOrders?.map((order, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 border">{order.id}</td>
-                  <td className="px-4 py-2 border">{order.userId}</td>
-                  <td className="px-4 py-2 border">{formatDateTime(order.createdAt)}</td>
-                  {/* <td className="px-4 py-2 border">{order.status}</td> */}
-                  <td className="px-4 py-2 border">
-                    <span className={`px-2 py-1 rounded-full text-sm ${getColor(order.status)}`}>
-                      {order.status}
-                    </span>
-                  </td>
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="px-4 py-2 border">{order.id}</td>
+                    <td className="px-4 py-2 border">{order.userId}</td>
+                    <td className="px-4 py-2 border">{formatDateTime(order.createdAt)}</td>
+                    {/* <td className="px-4 py-2 border">{order.status}</td> */}
+                    <td className="px-4 py-2 border">
+                      <span className={`px-2 py-1 rounded-full text-sm ${getColor(order.status)}`}>
+                        {order.status}
+                      </span>
+                    </td>
 
-                </tr>
-              ))
+                  </tr>
+                ))
               )}
             </tbody>
           </table>

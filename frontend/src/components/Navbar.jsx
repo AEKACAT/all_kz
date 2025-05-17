@@ -11,55 +11,26 @@ import { ImCross } from "react-icons/im";
 import ProductContext from '../state-management/ProductContext';
 import { LangSelect } from './LangSelect';
 import api from '../api-services/apiConfig';
+import useWhisperSTT from '../assets/helpers/useWhisperTTS';
 
 const Navbar = () => {
     const { t, i18n } = useTranslation();
     const { language } = i18n;
     // const [searchQuery, setSearchQuery] = useState('');
-    const { searchQuery, setSearchQuery } = useContext(ProductContext);
+    const { searchQuery, setSearchQuery, currentCategory } = useContext(ProductContext);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showMobileSearch, setShowMobileSearch] = useState(false);
     const [cartCount, setCartCount] = useState(0);
     const navigate = useNavigate();
     const [result, setResult] = useState("");
-    const [isRecording, setIsRecording] = useState(false);
-
-    // храним и Recorder, и сам Stream
-    const mediaRecorder = useRef(null);
-    const mediaStreamRef = useRef(null);
-
-    const handleToggle = async () => {
-        if (!isRecording) {
-            // 1) Запустить новую запись
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaStreamRef.current = stream;
-
-            mediaRecorder.current = new MediaRecorder(stream);
-            const chunks = [];
-            mediaRecorder.current.ondataavailable = e => chunks.push(e.data);
-            mediaRecorder.current.onstop = async () => {
-                const blob = new Blob(chunks, { type: 'audio/webm' });
-                const arrayBuffer = await blob.arrayBuffer();
-                const resp = await api.post('/api/speech/stt', arrayBuffer, {
-                    headers: { 'Content-Type': 'application/octet-stream' }
-                });
-                setResult(resp.data);
-            };
-
-            mediaRecorder.current.start();
-            setIsRecording(true);
-        } else {
-            // 2) Остановить запись и закрыть микрофон
-            mediaRecorder.current.stop();
-
-            // для каждого трека вызвать stop(), чтобы значок записи исчез
-            mediaStreamRef.current.getTracks().forEach(track => track.stop());
-
-            setIsRecording(false);
-            mediaStreamRef.current = null;
+    const { isRecording, handleToggle } = useWhisperSTT((text) => {
+        setSearchQuery(text);
+        setResult(text);
+        if (text?.trim()) {
+            navigate(`/search?query=${encodeURIComponent(text.trim())}`);
+            setShowMobileSearch(false);
         }
-    };
-
+    }, currentCategory); 
 
 
     // state values
@@ -97,10 +68,10 @@ const Navbar = () => {
 
     const handleLogout = () => {
 
-        if (window.confirm("Are you sure you want to logout?")) {
+        if (window.confirm(t('confirmLogout'))) {
             logout();
 
-            toast.success('Logged out successfully');
+            toast.success("");
             navigate('/login');
         }
 
@@ -191,15 +162,6 @@ const Navbar = () => {
 
                     {/* Mobile Icons (Search & Menu) */}
                     <div className="flex items-center gap-2 md:hidden">
-                        {searchQuery && (
-
-                            <button
-                                onClick={() => setSearchQuery('')}
-                                className="absolute inset-y-0 top-16 right-5 pr-7 flex items-center cursor-pointer">
-                                <ImCross className="text-gray-400 text-sm hover:text-gray-500" />
-                            </button>
-
-                        )}
                         {/* Mobile Search Icon */}
                         <LangSelect
                             defaultValue={language}
@@ -251,12 +213,12 @@ const Navbar = () => {
                                 {user?.role === "USER" && (
                                     <>
                                         {/* User profile */}
-                                        {/* <Link to="/user/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-full">
+                                        <Link to="/user/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-full">
                                             <FaUser className="h-4 w-4" color='gray-700' />
                                             <span className="text-gray-700 font-medium">
                                                 {user?.name}
                                             </span>
-                                        </Link> */}
+                                        </Link>
                                         {/* Shopping Cart */}
                                         <Link to="/cart" className="relative p-2 hover:bg-gray-100 rounded-full group">
                                             <FaShoppingCart className="h-5 w-5 text-gray-700 " />
@@ -306,11 +268,6 @@ const Navbar = () => {
                                 autoFocus
                             />
 
-                            {/* Иконка поиска (не кликабельная) */}
-                            <FaSearch
-                                className="absolute inset-y-0 right-12 pr-3 flex items-center pointer-events-none text-gray-400"
-                            />
-
                             {/* Кнопка записи/остановки */}
                             <button
                                 type="button"
@@ -318,7 +275,7 @@ const Navbar = () => {
                                 className="absolute inset-y-0 right-3 pr-3 flex items-center"
                             >
                                 {isRecording
-                                    ? <FaStop className="text-gray-400 hover:text-gray-500" />
+                                    ? <FaStop className="text-gray-400 hover:text-gray-500 right-3" />
                                     : <FaMicrophone className="text-gray-400 hover:text-gray-500" />
                                 }
                             </button>

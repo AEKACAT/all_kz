@@ -9,10 +9,12 @@ import Loading from "../../components/Loading";
 import { IoArrowForwardCircleOutline } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import Pagination from "../../components/Pagination";
+import { useTranslation } from "react-i18next";
 
 
 
 const ManageProducts = () => {
+  const { t } = useTranslation();
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [isOpenBulkUploadModal, setIsOpenBulkUploadModal] = useState(false);
@@ -55,7 +57,7 @@ const ManageProducts = () => {
   const handleUploadCsvFile = async () => {
 
     if (!csvFile || csvFile === null) {
-      toast.error('Please select a CSV file');
+      toast.error(t('selectCsv'));
       return;
     }
     const formData = new FormData();
@@ -76,7 +78,7 @@ const ManageProducts = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data?.message || 'Failed to upload CSV file');
+      toast.error(error.response?.data?.message || t('uploadFailed'));
       if (error.response?.data?.errors) {
         const errorsFromServer = error.response.data.errors;
         // console.log(errorsFromServer);
@@ -91,7 +93,7 @@ const ManageProducts = () => {
   }
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this product?')) {
+    if (window.confirm(t('confirmDelete'))) {
       await deleteProduct(id);
     }
   }
@@ -100,13 +102,13 @@ const ManageProducts = () => {
   return (
     <div className="p-6">
       {/* Title */}
-      <h1 className="text-2xl font-bold mb-4">Manage Products</h1>
+      <h1 className="text-2xl font-bold mb-4">{t('manageProducts')}</h1>
       {/* Top Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div className="flex-1">
           <input
             type="text"
-            placeholder="Search by name, brand, category..."
+            placeholder={t("searchPlaceholder")}
             className="form-input w-full p-2 border rounded-md shadow-sm"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -116,14 +118,14 @@ const ManageProducts = () => {
           className="primary-button px-4 py-2 rounded-md shadow-md"
           onClick={() => navigate("/admin/add-product")}
         >
-          + Add Product
+          + {t('addProduct')}
         </button>
 
         <button
           className="primary-button px-4 py-2 rounded-md shadow-md"
           onClick={() => setIsOpenBulkUploadModal(true)}
         >
-          + Add Bulk
+          +  {t('addBulk')}
         </button>
 
         {/* Category Filter */}
@@ -140,7 +142,7 @@ const ManageProducts = () => {
         </div>
         {/* Pagination selection for choosing how many products to show */}
         <div className="flex items-center space-x-2">
-          <label htmlFor="pageSize" className="text-sm font-semibold">Products per page:</label>
+          <label htmlFor="pageSize" className="text-sm font-semibold">{t('productsPerPage')}:</label>
           <select
             value={itemsPerPage}
             onChange={(e) => setItemsPerPage(parseInt(e.target.value))}
@@ -160,7 +162,7 @@ const ManageProducts = () => {
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {filteredProducts?.length === 0 && <p className="text-gray-500">No products found</p>}
+        {filteredProducts?.length === 0 && <p className="text-gray-500">{t('noProductsFound')}</p>}
         {filteredProducts?.map((product) => (
           <div
             key={product.id}
@@ -190,8 +192,7 @@ const ManageProducts = () => {
               className="p-2 border border-slate-500 hover:bg-slate-200 rounded-full font-bold text-center cursor-pointer"
               onClick={() => navigate(`/product/${product.id}`)}
             >
-              View Product
-
+              {t('viewProduct')}
             </button>
             <button
               // className="primary-button mt-3 px-4 py-1 bg-blue-600 text-white rounded-md"
@@ -238,8 +239,8 @@ const ManageProducts = () => {
               &times;
             </button>
 
-            <h2 className="text-xl font-semibold">Upload File in CSV Format</h2>
-            <p className="text-gray-600 mb-4">Select a CSV file to upload: with name, description, brand, category, price, image, sizes, colors, stock</p>
+            <h2 className="text-xl font-semibold">{t('uploadCsvTitle')}</h2>
+            <p className="text-gray-600 mb-4">{t('uploadCsvSubtitle')}</p>
 
             <input
               type="file"
@@ -253,13 +254,13 @@ const ManageProducts = () => {
                 onClick={() => setIsOpenBulkUploadModal(false)}
                 className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 cursor-pointer"
               >
-                Cancel
+                {t('cancel')}
               </button>
               <button
                 onClick={() => handleUploadCsvFile()} // ✅ call the function, not return it
                 className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
               >
-                Submit
+                {t('submit')}
               </button>
             </div>
           </div>

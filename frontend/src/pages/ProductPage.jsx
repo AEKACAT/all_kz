@@ -136,7 +136,7 @@ function ProductPage() {
     const renderProductsByCategory = () => {
         return (
             <div className="p-4">
-                <h1 className="text-5xl font-bold mb-3 text-center mb-6">{t("relatedProducts")}</h1>
+                <h1 className="text-5xl font-bold text-center mb-6">{t("relatedProducts")}</h1>
                 
                 <div
                     // className='flex gap-4'

@@ -9,31 +9,6 @@ const CategoriesBar = () => {
     const [showLeftArrow, setShowLeftArrow] = useState(false);
     const [showRightArrow, setShowRightArrow] = useState(true);
 
-    // const categories = [
-    //     { name: 'Electronics', path: '/category/electronics' },
-    //     { name: 'Fashion', path: '/category/fashion' },
-    //     { name: 'Home & Kitchen', path: '/category/home-kitchen' },
-    //     { name: 'Beauty', path: '/category/beauty' },
-    //     { name: 'Sports', path: '/category/sports' },
-    //     { name: 'Books', path: '/category/books' },
-    //     { name: 'Toys', path: '/category/toys' },
-    //     { name: 'Automotive', path: '/category/automotive' },
-    //     { name: 'Grocery', path: '/category/grocery' },
-    //     { name: 'Health', path: '/category/health' },
-    //     { name: 'Pets', path: '/category/pets' },
-    //     { name: 'Art', path: '/category/art' },
-    //     { name: 'Music', path: '/category/music' },
-    //     { name: 'Outdoors', path: '/category/outdoors' },
-    //     { name: 'Toys', path: '/category/toys' },
-    //     { name: 'Automotive', path: '/category/automotive' },
-    //     { name: 'Grocery', path: '/category/grocery' },
-    //     { name: 'Health', path: '/category/health' },
-    //     { name: 'Pets', path: '/category/pets' },
-    //     { name: 'Art', path: '/category/art' },
-
-    // ];
-
-    // state values
     const { categories, loading, error, message } = useContext(CategoryContext);
 
     const handleScroll = () => {

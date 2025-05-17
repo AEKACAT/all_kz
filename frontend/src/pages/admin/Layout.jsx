@@ -5,8 +5,11 @@ import { FaTachometerAlt, FaImages, FaShoppingCart, FaUsers, FaBox } from "react
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../state-management/AuthContext";
 import Loading from '../../components/Loading';
+import { useTranslation } from 'react-i18next';
 
 const Layout = ({ children }) => {
+  const { t } = useTranslation();
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const { loading, message, error } =  useContext(AuthContext)
@@ -31,28 +34,24 @@ const Layout = ({ children }) => {
         <ul className="mt-4 space-y-4 text-gray-800 font-medium">
           <li className="flex items-center gap-2 hover:text-purple-600 transition">
             <FaTachometerAlt />
-            <Link to="/admin/dashboard" onClick={() => setIsSidebarOpen(false)}>Dashboard</Link>
+            <Link to="/admin/dashboard" onClick={() => setIsSidebarOpen(false)}>{t('adminDashboard')}</Link>
           </li>
           <li className="flex items-center gap-2 hover:text-purple-600 transition">
             <FaBox />
-            <Link to="/admin/categories" onClick={() => setIsSidebarOpen(false)}>Categories</Link>
+            <Link to="/admin/categories" onClick={() => setIsSidebarOpen(false)}>{t('categories')}</Link>
           </li>
           {/* Products */}
           <li className="flex items-center gap-2 hover:text-purple-600 transition">
             <FaBox />
-            <Link to="/admin/products" onClick={() => setIsSidebarOpen(false)}>Products</Link>
-          </li>
-          <li className="flex items-center gap-2 hover:text-purple-600 transition">
-            <FaImages />
-            <Link to="/admin/carousels" onClick={() => setIsSidebarOpen(false)}>Carousel</Link>
+            <Link to="/admin/products" onClick={() => setIsSidebarOpen(false)}>{t('products')}</Link>
           </li>
           <li className="flex items-center gap-2 hover:text-purple-600 transition">
             <FaShoppingCart />
-            <Link to="/admin/orders" onClick={() => setIsSidebarOpen(false)}>Orders</Link>
+            <Link to="/admin/orders" onClick={() => setIsSidebarOpen(false)}>{t('dashboard.orders')}</Link>
           </li>
           <li className="flex items-center gap-2 hover:text-purple-600 transition">
             <FaUsers />
-            <Link to="/admin/users" onClick={() => setIsSidebarOpen(false)}>Customers</Link>
+            <Link to="/admin/users" onClick={() => setIsSidebarOpen(false)}>{t('customers')}</Link>
           </li>
         </ul>
       </aside>
@@ -67,7 +66,7 @@ const Layout = ({ children }) => {
           >
             <CiMenuFries />
           </button>
-          <h1 className="text-lg font-semibold ml-4">Admin Dashboard</h1>
+          <h1 className="text-lg font-semibold ml-4">{t('adminDashboard')}</h1>
         </nav>
 
         

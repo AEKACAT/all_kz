@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../../state-management/UserContext';
+import { useTranslation } from 'react-i18next';
 
 // Dummy data simulating the UserDto
 const dummyUsers = [
@@ -31,6 +32,7 @@ const dummyUsers = [
 
 function ManageUsers() {
   const [search, setSearch] = useState('');
+  const { t } = useTranslation();
 
   // state values
   const { users, loading, error, message, fetchAllUsers } = useContext(UserContext);
@@ -46,12 +48,12 @@ function ManageUsers() {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Manage Users</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">{t('manageUsers')}</h2>
 
       <div className="mb-4">
         <input
           type="text"
-          placeholder="Search by name or ID"
+          placeholder={t('searchUserPlaceholder')}
           className="w-full border border-gray-300 rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -60,19 +62,18 @@ function ManageUsers() {
 
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto border border-gray-300 bg-white rounded-lg">
-          <thead>
+          <thead className="p-3 border"ead>
             <tr className="bg-gray-100 text-left text-sm font-medium text-gray-700">
-                <th className="p-3 border">Id</th>
-              <th className="p-3 border">Name</th>
-              <th className="p-3 border">Email</th>
-              <th className="p-3 border">Phone</th>
-              <th className="p-3 border">City</th>
-              <th className="p-3 border">District</th>
-              <th className="p-3 border">State</th>
-              <th className="p-3 border">Country</th>
-              <th className="p-3 border">Street</th>
-              <th className="p-3 border">Created At</th>
-              {/* <th className="p-3 border">Actions</th> */}
+              <th className="p-3 border">{t('id')}</th>
+              <th className="p-3 border">{t('name')}</th>
+              <th className="p-3 border">{t('email')}</th>
+              <th className="p-3 border">{t('phone')}</th>
+              <th className="p-3 border">{t('city')}</th>
+              <th className="p-3 border">{t('district')}</th>
+              <th className="p-3 border">{t('state')}</th>
+              <th className="p-3 border">{t('country')}</th>
+              <th className="p-3 border">{t('street')}</th>
+              <th className="p-3 border">{t('createdAt')}</th>
             </tr>
           </thead>
           <tbody>
@@ -88,24 +89,12 @@ function ManageUsers() {
                 <td className="p-3 border">{user?.country || 'N/A'}</td>
                 <td className="p-3 border">{user?.street || 'N/A'}</td>
                 <td className="p-3 border">{new Date(user?.createdAt).toLocaleString()}</td>
-                {/* <td className="p-3 border">
-                    <button 
-                    onClick={() => {
-                      if (window.confirm('Are you sure you want to delete this user?')) {
-                        // handle delete action
-                        handleDeleteUser(user.id);
-                      }
-                    }}                    
-                    className="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none cursor-pointer">
-                      Delete
-                    </button>
-                  </td>   */}
               </tr>
             ))}
             {filteredUsers?.length === 0 && (
               <tr>
                 <td colSpan="9" className="text-center p-4 text-gray-500">
-                  No users found.
+                  {t('noUsersFound')}
                 </td>
               </tr>
             )}

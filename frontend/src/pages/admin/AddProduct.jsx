@@ -1,8 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { CategoryContext } from '../../state-management/CategoryContext';
 import { ProductContext } from '../../state-management/ProductContext';
+import { useTranslation } from 'react-i18next';
 
 function AddProduct() {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -64,10 +67,10 @@ function AddProduct() {
 
   return (
     <div className="mx-auto p-6 bg-white rounded-lg">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Add Product</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">{t('addProductTitle')}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Product Name</label>
+          <label className="block text-sm font-medium text-gray-700">{t('productName')}</label>
           <input
             type="text"
             name="name"
@@ -79,7 +82,7 @@ function AddProduct() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Description</label>
+          <label className="block text-sm font-medium text-gray-700">{t('description')}</label>
           <textarea
             name="description"
             rows="3"
@@ -93,7 +96,7 @@ function AddProduct() {
         {/* Price and Stock */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Price</label>
+            <label className="block text-sm font-medium text-gray-700">{t('price')}</label>
             <input
               type="number"
               name="price"
@@ -105,7 +108,7 @@ function AddProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Stock</label>
+            <label className="block text-sm font-medium text-gray-700">{t('stock')}</label>
             <input
               type="number"
               name="stock"
@@ -121,7 +124,7 @@ function AddProduct() {
         {/* Brand and Category */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Brand</label>
+            <label className="block text-sm font-medium text-gray-700">{t('brand')}</label>
             <input
               type="text"
               name="brand"
@@ -132,7 +135,7 @@ function AddProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Category</label>
+            <label className="block text-sm font-medium text-gray-700">{t('category')}</label>
             <select
               name="category"
               className="form-input mt-1 block w-full border border-gray-300 rounded-md p-2 bg-white focus:ring-indigo-500 focus:border-indigo-500"
@@ -140,7 +143,7 @@ function AddProduct() {
               onChange={handleChange}
               required
             >
-              <option value="">Select a category</option>
+              <option value="">{t('selectCategory')}</option>
               {categories?.map((cat) => (
                 <option key={cat.id} value={cat.name}>{cat.name}</option>
               ))}
@@ -151,7 +154,7 @@ function AddProduct() {
         {/* Sizes and Colors */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Sizes or Specifications (comma separated)</label>
+            <label className="block text-sm font-medium text-gray-700">{t('sizes')}</label>
             <input
               type="text"
               name="sizes"
@@ -161,7 +164,7 @@ function AddProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Colors (comma separated)</label>
+            <label className="block text-sm font-medium text-gray-700">{t('colors')}</label>
             <input
               type="text"
               name="colors"
@@ -173,7 +176,7 @@ function AddProduct() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Image</label>
+          <label className="block text-sm font-medium text-gray-700">{t('image')}</label>
           <input
             type="file"
             name="imageFile"
@@ -190,7 +193,7 @@ function AddProduct() {
             className={`primary-button ${!isFormValid || loading ? 'disable-button' : ''}`}
             disabled={!isFormValid || loading}
           >
-            {loading ? 'Submitting...' : 'Submit'}
+            {loading ? t('submitting') : t('submit')}
           </button>
         </div>
       </form>

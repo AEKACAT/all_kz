@@ -18,7 +18,6 @@ function AdminRoutes() {
           <Route path='/products' element={<ManageProducts />} />
           <Route path='/add-product' element={<AddProduct />} />
           <Route path='/update-product/:productId' element={<UpdateProduct />} />
-          <Route path='/carousels' element={<ManageCarousel />} />
           <Route path='/orders' element={<ManageOrders />} />
           <Route path='/users' element={<ManageUsers />} />
           <Route path='/categories' element={<ManageCategories />} />

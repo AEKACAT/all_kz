@@ -23,8 +23,7 @@ export const ProductProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  
-
+  const [currentCategory, setCurrentCategory] = useState('Кітаптар'); // значение по умолчанию
   
   async function fetchProductReviews(productId) {
     setLoading(true);
@@ -313,8 +312,9 @@ export const ProductProvider = ({ children }) => {
         fetchMetrics,
 
         searchQuery, setSearchQuery,
+        // ADD 
+        currentCategory, setCurrentCategory,
 
-        // Carousel State and Functions
         carousels,
         setCarousels,
         fetchCarousels,

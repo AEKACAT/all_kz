@@ -208,17 +208,8 @@ function Cart() {
   const checkOutWithRazorPay = async () => {
     setPaymentLoading(true);
     try {
-      //   {
-      //     "userId":2,
-      //     "productId":1,
-      //     "quantity":2,
-      //     "shippingAddress":"tetst purpose",
-      //     "paymentMode":"razorpay"
-      // }
       const orderRquest = {
         userId: user.id,
-        // productId:productId,
-        // quantity:quantity,
         shippingAddress: shippingAddress,
         paymentMode: paymentMode
       }
@@ -226,11 +217,6 @@ function Cart() {
 
       const orderDataFromServer = response.data?.razorpayOrder;
       console.log(orderDataFromServer, "response from server whith razorpay");
-      //   "razorpayOrder": {
-      //     "id": "order_QHkW8AZHhnzU7V",
-      //     "currency": "INR",
-      //     "amount": 9000000
-      // },
       if (orderDataFromServer) {
         openRazorpay(orderDataFromServer);
       } else {
@@ -238,12 +224,6 @@ function Cart() {
         toast.success("Order placed successfully");
         navigate('/user/orders');
       }
-      // openRazorpay(orderDataFromServer);
-      // const response = await fetch("http://localhost:8080/createOrder?amount=20&currency=INR&receipt=receipt1", {
-      //   method: "POST",
-      // });
-      // const orderData = await response.json();
-      // openRazorpay(orderData);
     } catch (error) {
       console.error("Error creating order:", error);
     } finally {
@@ -251,8 +231,6 @@ function Cart() {
     }
   };
   const handleCheckOut = async () => {
-    // setting checkout;
-    // checking payment mode is selected or not
     if (!paymentMode) {
       toast.error('Please select payment mode');
       return;
@@ -408,21 +386,22 @@ function Cart() {
               name="shippingAddress"
               value={shippingAddress}
               onChange={(e) => setShippingAddress(e.target.value)}
-              placeholder="Shipping Address"
+              placeholder="Міндетті"
               className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black"
               rows={2}
+              required
             />
           </div>
 
           {/* Checkout Button */}
-          {/* <button
+          <button
             onClick={handleCheckOut}
             disabled={cart?.length === 0}
             className={`w-full text-center text-white font-semibold rounded-full py-3 text-sm transition 
-      ${cart?.length === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-black hover:bg-gray-900'}`}
+            ${cart?.length === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-black hover:bg-gray-900'}`}
           >
-            Go to Checkout →
-          </button> */}
+            Сатып алу
+          </button>
         </div>
 
       </div>

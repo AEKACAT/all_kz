@@ -2,8 +2,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductContext from '../../state-management/ProductContext';
 import CategoryContext from '../../state-management/CategoryContext';
+import { useTranslation } from 'react-i18next';
 
 function UpdateProduct() {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -17,11 +20,11 @@ function UpdateProduct() {
     category: '',
   });
 
-  const {productId} = useParams();
+  const { productId } = useParams();
   const { product, loading, error, message, updateProduct,
     fetchProductById
-   } = useContext(ProductContext);
-  const {categories} = useContext(CategoryContext);
+  } = useContext(ProductContext);
+  const { categories } = useContext(CategoryContext);
   // const categories = ['Electronics', 'Clothing', 'Books', 'Home Appliances'];
 
   useEffect(() => {
@@ -78,10 +81,10 @@ function UpdateProduct() {
 
   return (
     <div className="mx-auto p-6 bg-white rounded-lg">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Update Product</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">{t('updateProductTitle')}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Product Name</label>
+          <label className="block text-sm font-medium text-gray-700">{t('productName')}</label>
           <input
             type="text"
             name="name"
@@ -93,7 +96,7 @@ function UpdateProduct() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Description</label>
+          <label className="block text-sm font-medium text-gray-700">{t('description')}</label>
           <textarea
             name="description"
             rows="3"
@@ -106,7 +109,7 @@ function UpdateProduct() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Price</label>
+            <label className="block text-sm font-medium text-gray-700">{t('price')}</label>
             <input
               type="number"
               name="price"
@@ -118,7 +121,7 @@ function UpdateProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Stock</label>
+            <label className="block text-sm font-medium text-gray-700">{t('stock')}</label>
             <input
               type="number"
               name="stock"
@@ -133,7 +136,7 @@ function UpdateProduct() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Brand</label>
+            <label className="block text-sm font-medium text-gray-700">{t('brand')}</label>
             <input
               type="text"
               name="brand"
@@ -144,7 +147,7 @@ function UpdateProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Category</label>
+            <label className="block text-sm font-medium text-gray-700">{t('category')}</label>
             <select
               name="category"
               className="form-input mt-1 block w-full bg-white"
@@ -152,8 +155,8 @@ function UpdateProduct() {
               onChange={handleChange}
               required
             >
-              <option value="">Select a category</option>
-              {categories.map((cat) => (  
+              <option value="">{t('selectCategory')}</option>
+              {categories.map((cat) => (
                 <option key={cat.id} value={cat.name}>{cat.name}</option>
               ))}
             </select>
@@ -162,7 +165,7 @@ function UpdateProduct() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Sizes or Specifications</label>
+            <label className="block text-sm font-medium text-gray-700">{t('sizes')}</label>
             <input
               type="text"
               name="sizes"
@@ -172,7 +175,7 @@ function UpdateProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Colors</label>
+            <label className="block text-sm font-medium text-gray-700">{t('colors')}</label>
             <input
               type="text"
               name="colors"
@@ -184,8 +187,8 @@ function UpdateProduct() {
         </div>
 
         <div>
-        <p className='mb-2'>Current Image: {formData.choosenImage}</p>
-          <label className="block text-sm font-medium text-gray-700">New Image</label>
+          <p className='mb-2'>{t('currentImage')} {formData.choosenImage}</p>
+          <label className="block text-sm font-medium text-gray-700">{t('newImage')}</label>
           <input
             type="file"
             name="imageFile"
@@ -193,7 +196,7 @@ function UpdateProduct() {
             className="form-input mt-1 block w-full"
             onChange={handleChange}
           />
-          
+
         </div>
 
         <div className="pt-4 flex justify-end">
@@ -202,7 +205,7 @@ function UpdateProduct() {
             className={`primary-button ${!isFormValid || loading ? 'disable-button' : ''}`}
             disabled={!isFormValid || loading}
           >
-            {loading ? 'Updating...' : 'Update Product'}
+            {loading ? t('updating') : t('updateProduct')}
           </button>
         </div>
       </form>

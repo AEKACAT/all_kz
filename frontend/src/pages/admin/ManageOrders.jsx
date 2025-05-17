@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../../state-management/UserContext';
 import Loading from '../../components/Loading';
 import { getColor } from '../../components/getColor';
+import { useTranslation } from 'react-i18next';
 
 
 function ManageOrders() {
-  // const [orders, setOrders] = useState(dummyOrders);
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [editedStatuses, setEditedStatuses] = useState({});
@@ -75,33 +76,23 @@ function ManageOrders() {
 
   return (
     <div className="p-6 max-w-7xl mx-auto bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">🧾 Manage Orders</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">🧾 {t('manageOrders')}</h2>
 
       {/* Filters */}
       <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
         <input
           type="text"
-          placeholder="Search by Order ID..."
+          placeholder={t('searchOrderPlaceholder')}
           className="border border-gray-300 rounded-md p-2 w-full md:w-1/2"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        {/* <select 
-        value={sortOrder} 
-        onChange={(e) => setSortOrder(e.target.value)} 
-        
-        className="border border-gray-300 rounded-md p-2 w-full md:w-1/4">
-  <option value="">Sort by Date</option>
-  <option value="asc">Oldest First</option>
-  <option value="desc">Newest First</option>
-</select> */}
-
         <select
           className="border border-gray-300 rounded-md p-2 w-full md:w-1/4"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
         >
-          <option value="">All Statuses</option>
+          <option value="">{t('allStatuses')}</option>
           {statusOptionsForFilter.map((status) => (
             <option key={status} value={status}>
               {status}
@@ -115,20 +106,20 @@ function ManageOrders() {
         <table className="w-full table-auto text-sm text-left text-gray-700 border">
           <thead className="bg-gray-100">
             <tr className='w-auto'>
-              <th className="p-3 border">Order ID</th>
-              <th className="p-3 border">User ID</th>
-              <th className="p-3 border">Product</th>
-              <th className="p-3 border">Qty</th>
-              <th className="p-3 border">Total Amount</th>
-              <th className="p-3 border">Payment Id</th>
-              <th className="p-3 border">Payment Method</th>
-              <th className="p-3 border">Payment Status</th>
-              <th className="p-3 border">Order Status</th>
+              <th className="p-3 border">{t('orderId')}</th>
+              <th className="p-3 border">{t('userId')}</th>
+              <th className="p-3 border">{t('product')}</th>
+              <th className="p-3 border">{t('qty')}</th>
+              <th className="p-3 border">{t('totalAmount')}</th>
+              <th className="p-3 border">{t('paymentId')}</th>
+              <th className="p-3 border">{t('paymentMethod')}</th>
+              <th className="p-3 border">{t('paymentStatus')}</th>
+              <th className="p-3 border">{t('orderStatus')}</th>
+              <th className="p-3 border">{t('orderAt')}</th>
+              <th className="p-3 border">{t('updateStatus')}</th>
+              <th className="p-3 border">{t('actions')}</th>
 
-              <th className="p-3 border">Order At</th>
 
-              <th className="p-3 border">Update Status</th>
-              <th className="p-3 border">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -186,7 +177,7 @@ function ManageOrders() {
                       {statusOptions.map((status) => (
                         <option key={status} value={status}
                         >
-                          {status == 'COMPLETED' ? "COMPLETED (FOR PAYMENT, CASH ON DELIVERY)" : status}
+                          {status === 'COMPLETED' ? t('completedWithNote') : status}
 
                         </option>
                       ))}
@@ -203,14 +194,14 @@ function ManageOrders() {
                           } `}
                         disabled={loading || editedStatuses.id !== order.id}
                       >
-                        {loading ? 'Saving...' : 'Save'}
+                        {loading ? t('saving') : t('save')}
                       </button>
                       {order?.status == 'REFUND_ISSUED' &&
                         <button
                           onClick={() => handleRefund(order.id)}
                           className="primary-button"
                         >
-                          Refund
+                          {t('refund')}
                         </button>
                       }
                     </div>
@@ -220,7 +211,7 @@ function ManageOrders() {
             ) : (
               <tr>
                 <td className="p-4 text-center text-gray-500" colSpan="8">
-                  No orders found.
+                    {t('noOrdersFound')}
                 </td>
               </tr>
             )}

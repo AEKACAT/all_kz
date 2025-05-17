@@ -34,7 +34,6 @@ export const UserProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await api.put(`/user/order/update?orderId=${orderId}&status=${status}`);
-      toast.success(response.data.message);
       setMessage(response.data.message);
 
       const user = JSON.parse(localStorage.getItem("user"));
@@ -43,10 +42,6 @@ export const UserProvider = ({ children }) => {
       } else {
         fetchOrdersByUser(user.id);
       }
-      // fetchAllOrders();
-      // fetchOrdersByUser(userId);
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to update order");
     } finally {
       setLoading(false);
     }

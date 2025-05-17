@@ -7,8 +7,11 @@ import Loading from '../components/Loading';
 import { toast } from 'react-toastify';
 import { getColor } from './getColor';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function UserOrders() {
+  const { t } = useTranslation();
+
   const [editMode, setEditMode] = useState(false);
   const [activeTab, setActiveTab] = useState('profile');
   const [currentPassword, setCurrentPassword] = useState('');
@@ -80,24 +83,15 @@ function UserOrders() {
     return `${day}-${month}-${year} at ${pad(hours)}:${minutes}:${seconds} ${ampm}`;
   }
 
-  //   const handleCancelOrder = async (orderId) => {
-
-  //     // logic to cancel the order, update status to CANCELLED;
-  //     updateOrder(orderId, 'CANCELLED');
-  //   };
   const handleCancelOrder = async (orderId) => {
-    const confirmed = window.confirm('Are you sure you want to cancel this order?');
+    const confirmed = window.confirm(t('cancelOrderConfirm'));
     if (confirmed) {
-      await updateOrder(orderId, 'CANCELLED');
-      // toast.success("Order cancelled successfully!");
+      const res = await updateOrder(orderId, 'CANCELLED');
+      if (res.status === 200) {
+        
+      }
     }
   };
-
-
-
-
-
-
 
   if (loading || authLoading) return <Loading />
   return (
@@ -106,10 +100,10 @@ function UserOrders() {
 
       <div>
         <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-          <FaBoxOpen /> Your Orders
+          <FaBoxOpen /> {t('yourOrders')}
         </h2>
         {orders.length === 0 ? (
-          <p className="text-gray-600">No orders found.</p>
+          <p className="text-gray-600">{t('noOrdersFound')}</p>
         ) : (
           <div className="space-y-4">
             {filteredOrders.map((order) => (
@@ -130,35 +124,35 @@ function UserOrders() {
 
                 {/* Right: Order Details */}
                 <div className="flex-1">
-                  <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Order ID:</span> {order.id}</p>
-                  <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Product:</span> {order.productName}</p>
-                  <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Quantity:</span> {order.quantity}</p>
-                  <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Total Amount:</span> ₸{order.totalAmount}</p>
+                  <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">{t('orderId')}</span> {order.id}</p>
+                  <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">{t('product')}:</span> {order.productName}</p>
+                  <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">{t('quantity')}:</span> {order.quantity}</p>
+                  <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">{t('totalAmount')}:</span> ₸{order.totalAmount}</p>
 
                   <p className='flex flex-row w-full justify-between my-3'>
-                    <span className="font-medium text-[#000000]/60">Status:</span>
+                    <span className="font-medium text-[#000000]/60">{t('status')}:</span>
                     <span className={'ml-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide shadow-sm ' + getColor(order.status)}>
                       {order.status}
                     </span>
                   </p>
 
                   <p className='flex flex-row w-full justify-between my-3'>
-                    <span className="font-medium text-[#000000]/60">Payment:</span> {order.paymentMethod || 'Cash on Delivery'}
+                    <span className="font-medium text-[#000000]/60">{t('payment')}:</span> {order.paymentMethod || 'Cash on Delivery'}
                   </p>
 
                   <p className='flex flex-row w-full justify-between my-3'>
-                    <span className="font-medium text-[#000000]/60">Payment Status:</span>
+                    <span className="font-medium text-[#000000]/60">{t('paymentStatus')}:</span>
                     <span className={'ml-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide shadow-sm ' + getColor(order.paymentStatus)}>
                       {order.paymentStatus}
                     </span>
                   </p>
 
                   {order?.paymentId && (
-                    <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Payment ID:</span> {order.paymentId}</p>
+                    <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">{t('paymentId')}:</span> {order.paymentId}</p>
                   )}
 
-                  <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Delivery Address:</span> {order.shippingAddress || 'N/A'}</p>
-                  <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Order Date:</span> {formatDateTime(order.createdAt || '')}</p>
+                  <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">{t('deliveryAddress')}:</span> {order.shippingAddress || 'N/A'}</p>
+                  <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">{t('orderDate')}:</span> {formatDateTime(order.createdAt || '')}</p>
 
 
                   {order?.status !== 'CANCELLED' &&
@@ -168,40 +162,11 @@ function UserOrders() {
                         className="mt-3 cursor-pointer text-white rounded-full bg-red-500 px-4 py-2 text-sm hover:bg-red-600"
                         onClick={() => handleCancelOrder(order.id)}
                       >
-                        Cancel Order
+                        {t('cancelOrder')}
                       </button>
                     )}
                 </div>
               </div>
-
-              // <div key={order.id} className="p-4 border border-gray-200 rounded">
-              //   <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Order ID:</span> {order.id}</p>
-              //   <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Product:</span> {order.productName}</p>
-              //   <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Quantity:</span> {order.quantity}</p>
-              //   <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Total Amount:</span> ₸{order.totalAmount}</p>
-              //   <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Order Date:</span> {formatDateTime(order.createdAt || '')}</p>
-              //   <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Status:</span> 
-              //   <span className={'ml-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide shadow-sm' + getColor(order.status)}>
-              //     {order.status}</span>
-              //   </p>
-              //   <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Payment:</span> {order.paymentMethod || 'Cash on Delivery'}</p>
-
-              //   <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Payment Status:</span> 
-              //   <span className={'ml-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide shadow-sm' + getColor(order.paymentStatus)}>
-              //   {order.paymentStatus}</span>
-              //   </p>
-              //   {order?.paymentId && <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Payment ID:</span> {order?.paymentId}</p>}
-
-              //   <p className='flex flex-row w-full justify-between my-3'><span className="font-medium text-[#000000]/60">Delivery Address:</span> {order.shippingAddress || 'N/A'}</p>
-              //   <p className='flex flex-row w-full justify-between my-3'>{order?.status !== 'CANCELLED' && 
-              //   order?.status !== 'DELIVERED' 
-              //   && <button className="mt-2 cursor-pointer  text-white rounded-full bg-red-500 px-4 py-2 text-sm hover:bg-red-600 " 
-              //   onClick={() => handleCancelOrder(order.id)}
-              //   >Cancel Order</button>}
-
-              //    </p>
-
-              // </div>
             ))}
           </div>
         )}
